@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -28,6 +29,12 @@ import widgets.trans.TransMonitorView;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JRadioButton;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainGui {
 	private JFrame jFrame = null; // @jve:decl-index=0:visual-constraint="10,10"
@@ -69,6 +76,7 @@ public class MainGui {
 	private Diagram diagramTransient;
 	private TransMonitorView transMonitorView;
 	public static MainGui application;
+	private JPanel panel_1;
 
 	/**
 	 * @param args
@@ -292,12 +300,40 @@ public class MainGui {
 			jPanelTestTab = new JPanel();
 			jPanelTestTab.setName("");
 			jPanelTestTab.setToolTipText("");
-			jPanelTestTab.setLayout(new GridLayout(0, 1, 0, 0));
-			jPanelTestTab.add(getDiagramQueueProjects());
-			jPanelTestTab.add(getDiagramQueueDevelopmentTasks());
-			jPanelTestTab.add(getDiagramQueueTestingTasks());
-			jPanelTestTab.add(getDiagramCountCompletedProjects());
-			jPanelTestTab.add(getJButtonTest());
+			GroupLayout gl_jPanelTestTab = new GroupLayout(jPanelTestTab);
+			gl_jPanelTestTab
+					.setHorizontalGroup(gl_jPanelTestTab
+							.createParallelGroup(Alignment.LEADING)
+							.addGroup(
+									gl_jPanelTestTab
+											.createSequentialGroup()
+											.addGap(12)
+											.addGroup(
+													gl_jPanelTestTab
+															.createParallelGroup(
+																	Alignment.LEADING)
+															.addComponent(
+																	getPanel_1_1(),
+																	GroupLayout.PREFERRED_SIZE,
+																	498,
+																	Short.MAX_VALUE)
+															.addComponent(
+																	getJButtonTest(),
+																	GroupLayout.DEFAULT_SIZE,
+																	498,
+																	Short.MAX_VALUE))
+											.addGap(12)));
+			gl_jPanelTestTab
+					.setVerticalGroup(gl_jPanelTestTab.createParallelGroup(
+							Alignment.LEADING).addGroup(
+							gl_jPanelTestTab
+									.createSequentialGroup()
+									.addGap(12)
+									.addComponent(getPanel_1_1(),
+											GroupLayout.PREFERRED_SIZE, 468,
+											Short.MAX_VALUE).addGap(12)
+									.addComponent(getJButtonTest()).addGap(12)));
+			jPanelTestTab.setLayout(gl_jPanelTestTab);
 		}
 		return jPanelTestTab;
 	}
@@ -310,12 +346,55 @@ public class MainGui {
 	private JPanel getJPanelStatTab() {
 		if (jPanelStatTab == null) {
 			jPanelStatTab = new JPanel();
-			jPanelStatTab.setLayout(new GridLayout(5, 1, 0, 0));
-			jPanelStatTab.add(getDiagram4());
-			jPanelStatTab.add(getJScrollPane());
-			jPanelStatTab.add(getDiagram5());
-			jPanelStatTab.add(getJScrollPane1());
-			jPanelStatTab.add(getJButtonStat());
+
+			JPanel panel = new JPanel();
+			panel.setLayout(new GridLayout(2, 2, 0, 0));
+			panel.add(getDiagram4());
+			panel.add(getDiagram5());
+			panel.add(getJScrollPane());
+			panel.add(getJScrollPane1());
+			GroupLayout gl_jPanelStatTab = new GroupLayout(jPanelStatTab);
+			gl_jPanelStatTab
+					.setHorizontalGroup(gl_jPanelStatTab
+							.createParallelGroup(Alignment.LEADING)
+							.addGroup(
+									Alignment.TRAILING,
+									gl_jPanelStatTab
+											.createSequentialGroup()
+											.addGap(12)
+											.addGroup(
+													gl_jPanelStatTab
+															.createParallelGroup(
+																	Alignment.TRAILING)
+															.addComponent(
+																	panel,
+																	Alignment.LEADING,
+																	GroupLayout.PREFERRED_SIZE,
+																	498,
+																	Short.MAX_VALUE)
+															.addComponent(
+																	getJButtonStat(),
+																	Alignment.LEADING,
+																	GroupLayout.DEFAULT_SIZE,
+																	498,
+																	Short.MAX_VALUE))
+											.addGap(12)));
+			gl_jPanelStatTab
+					.setVerticalGroup(gl_jPanelStatTab.createParallelGroup(
+							Alignment.LEADING)
+							.addGroup(
+									Alignment.TRAILING,
+									gl_jPanelStatTab
+											.createSequentialGroup()
+											.addContainerGap()
+											.addComponent(panel,
+													GroupLayout.PREFERRED_SIZE,
+													474, Short.MAX_VALUE)
+											.addPreferredGap(
+													ComponentPlacement.RELATED)
+											.addComponent(getJButtonStat())
+											.addGap(12)));
+			jPanelStatTab.setLayout(gl_jPanelStatTab);
 		}
 		return jPanelStatTab;
 	}
@@ -404,7 +483,7 @@ public class MainGui {
 		}
 		return diagram5;
 	}
-	
+
 	/**
 	 * This method initializes diagramRegress
 	 * 
@@ -416,7 +495,7 @@ public class MainGui {
 		}
 		return diagramRegress;
 	}
-	
+
 	/**
 	 * This method initializes diagramTransient
 	 * 
@@ -628,6 +707,17 @@ public class MainGui {
 	private JFrame getJFrame() {
 		if (jFrame == null) {
 			jFrame = new JFrame();
+			jFrame.addComponentListener(new ComponentAdapter() {
+				@Override
+				public void componentResized(ComponentEvent e) {
+					if (jFrame.getWidth() < 800) {
+						jFrame.setSize(800, jFrame.getHeight());
+					}
+					if (jFrame.getHeight() < 600) {
+						jFrame.setSize(jFrame.getWidth(), 600);
+					}
+				}
+			});
 			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setSize(800, 600);
 			jFrame.setContentPane(getJContentPane());
@@ -661,24 +751,99 @@ public class MainGui {
 	private JPanel getJPanelRegressTab() {
 		if (jPanelRegressTab == null) {
 			jPanelRegressTab = new JPanel();
+
+			JPanel panel = new JPanel();
+			panel.setBorder(new TitledBorder(
+					new LineBorder(new Color(184, 207, 229)),
+					"\u0412\u0438\u0431\u0456\u0440 \u0444\u0430\u043A\u0442\u043E\u0440\u0443",
+					TitledBorder.CENTER, TitledBorder.TOP, null, new Color(51,
+							51, 51)));
 			GroupLayout gl_jPanelRegressTab = new GroupLayout(jPanelRegressTab);
-			gl_jPanelRegressTab.setHorizontalGroup(
-				gl_jPanelRegressTab.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_jPanelRegressTab.createSequentialGroup()
-						.addComponent(getExperimentControl(), GroupLayout.PREFERRED_SIZE, 273, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(getRegresAnaliser(), GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE))
-					.addComponent(getDiagramRegress(), GroupLayout.PREFERRED_SIZE, 522, Short.MAX_VALUE)
-			);
-			gl_jPanelRegressTab.setVerticalGroup(
-				gl_jPanelRegressTab.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_jPanelRegressTab.createSequentialGroup()
-						.addComponent(getDiagramRegress(), GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-						.addGroup(gl_jPanelRegressTab.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(getRegresAnaliser(), 0, 0, Short.MAX_VALUE)
-							.addComponent(getExperimentControl(), GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)))
-			);
+			gl_jPanelRegressTab
+					.setHorizontalGroup(gl_jPanelRegressTab
+							.createParallelGroup(Alignment.TRAILING)
+							.addGroup(
+									gl_jPanelRegressTab
+											.createSequentialGroup()
+											.addContainerGap()
+											.addGroup(
+													gl_jPanelRegressTab
+															.createParallelGroup(
+																	Alignment.LEADING)
+															.addComponent(
+																	getDiagramRegress(),
+																	GroupLayout.PREFERRED_SIZE,
+																	498,
+																	Short.MAX_VALUE)
+															.addGroup(
+																	gl_jPanelRegressTab
+																			.createSequentialGroup()
+																			.addComponent(
+																					getExperimentControl(),
+																					GroupLayout.PREFERRED_SIZE,
+																					246,
+																					GroupLayout.PREFERRED_SIZE)
+																			.addPreferredGap(
+																					ComponentPlacement.RELATED)
+																			.addComponent(
+																					getRegresAnaliser(),
+																					GroupLayout.DEFAULT_SIZE,
+																					246,
+																					Short.MAX_VALUE))
+															.addComponent(
+																	panel,
+																	GroupLayout.DEFAULT_SIZE,
+																	498,
+																	Short.MAX_VALUE))
+											.addContainerGap()));
+			gl_jPanelRegressTab
+					.setVerticalGroup(gl_jPanelRegressTab
+							.createParallelGroup(Alignment.TRAILING)
+							.addGroup(
+									gl_jPanelRegressTab
+											.createSequentialGroup()
+											.addContainerGap()
+											.addComponent(getDiagramRegress(),
+													GroupLayout.PREFERRED_SIZE,
+													240, Short.MAX_VALUE)
+											.addPreferredGap(
+													ComponentPlacement.RELATED)
+											.addComponent(panel,
+													GroupLayout.PREFERRED_SIZE,
+													48,
+													GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(
+													ComponentPlacement.UNRELATED)
+											.addGroup(
+													gl_jPanelRegressTab
+															.createParallelGroup(
+																	Alignment.LEADING,
+																	false)
+															.addComponent(
+																	getRegresAnaliser(),
+																	Alignment.TRAILING,
+																	GroupLayout.PREFERRED_SIZE,
+																	199,
+																	GroupLayout.PREFERRED_SIZE)
+															.addComponent(
+																	getExperimentControl(),
+																	GroupLayout.PREFERRED_SIZE,
+																	199,
+																	GroupLayout.PREFERRED_SIZE))
+											.addContainerGap()));
+			panel.setLayout(new GridLayout(0, 2, 0, 0));
+
+			JRadioButton radioButton = new JRadioButton("1");
+			radioButton.setSelected(true);
+			panel.add(radioButton);
+
+			JRadioButton radioButton_1 = new JRadioButton("2");
+			panel.add(radioButton_1);
+
+			ButtonGroup buttonGroup = new ButtonGroup();
+			buttonGroup.add(radioButton);
+			buttonGroup.add(radioButton_1);
+
 			jPanelRegressTab.setLayout(gl_jPanelRegressTab);
 		}
 		return jPanelRegressTab;
@@ -687,9 +852,52 @@ public class MainGui {
 	private JPanel getJPanelTransTab() {
 		if (jPanelTransTab == null) {
 			jPanelTransTab = new JPanel();
-			jPanelTransTab.setLayout(new GridLayout(2, 0, 0, 0));
-			jPanelTransTab.add(getDiagramTransient());
-			jPanelTransTab.add(getTransMonitorView());
+			GroupLayout gl_jPanelTransTab = new GroupLayout(jPanelTransTab);
+			gl_jPanelTransTab
+					.setHorizontalGroup(gl_jPanelTransTab
+							.createParallelGroup(Alignment.LEADING)
+							.addGroup(
+									Alignment.TRAILING,
+									gl_jPanelTransTab
+											.createSequentialGroup()
+											.addContainerGap()
+											.addGroup(
+													gl_jPanelTransTab
+															.createParallelGroup(
+																	Alignment.TRAILING)
+															.addComponent(
+																	getDiagramTransient(),
+																	Alignment.LEADING,
+																	GroupLayout.PREFERRED_SIZE,
+																	498,
+																	Short.MAX_VALUE)
+															.addComponent(
+																	getTransMonitorView(),
+																	Alignment.LEADING,
+																	GroupLayout.DEFAULT_SIZE,
+																	498,
+																	Short.MAX_VALUE))
+											.addContainerGap()));
+			gl_jPanelTransTab
+					.setVerticalGroup(gl_jPanelTransTab.createParallelGroup(
+							Alignment.LEADING)
+							.addGroup(
+									gl_jPanelTransTab
+											.createSequentialGroup()
+											.addContainerGap()
+											.addComponent(
+													getDiagramTransient(),
+													GroupLayout.PREFERRED_SIZE,
+													273, Short.MAX_VALUE)
+											.addPreferredGap(
+													ComponentPlacement.RELATED)
+											.addComponent(
+													getTransMonitorView(),
+													GroupLayout.PREFERRED_SIZE,
+													226,
+													GroupLayout.PREFERRED_SIZE)
+											.addContainerGap()));
+			jPanelTransTab.setLayout(gl_jPanelTransTab);
 		}
 		return jPanelTransTab;
 	}
@@ -697,6 +905,7 @@ public class MainGui {
 	private JSplitPane getSplitPane() {
 		if (splitPane == null) {
 			splitPane = new JSplitPane();
+			splitPane.setOneTouchExpandable(true);
 			splitPane.setLeftComponent(getPanelFeft());
 			splitPane.setRightComponent(getPanelRight());
 		}
@@ -734,17 +943,31 @@ public class MainGui {
 		}
 		return panelFeft;
 	}
+
 	private ExperimentControl getExperimentControl() {
 		if (experimentControl == null) {
 			experimentControl = new ExperimentControl();
+			experimentControl.setTextFactors("1 2 3 4 5 ");
+			experimentControl
+					.setBorder(new TitledBorder(
+							new EtchedBorder(EtchedBorder.LOWERED, null, null),
+							"\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0438 \u0435\u043A\u0441\u043F\u0435\u0440\u0438\u043C\u0435\u043D\u0442\u0443",
+							TitledBorder.CENTER, TitledBorder.TOP, null,
+							new Color(51, 51, 51)));
 			experimentControl.setFactory(ModelFactory.getInstance());
 			experimentControl.setDiagram(getDiagramRegress());
 		}
 		return experimentControl;
 	}
+
 	private RegresAnaliser getRegresAnaliser() {
 		if (regresAnaliser == null) {
 			regresAnaliser = new RegresAnaliser();
+			regresAnaliser.setBorder(new TitledBorder(new EtchedBorder(
+					EtchedBorder.LOWERED, null, null),
+					"\u0410\u043D\u0430\u043B\u0456\u0437",
+					TitledBorder.CENTER, TitledBorder.TOP, null, new Color(51,
+							51, 51)));
 			regresAnaliser.setDiagram(getDiagramRegress());
 			regresAnaliser.setIRegresable(getExperimentControl());
 		}
@@ -754,9 +977,27 @@ public class MainGui {
 	private TransMonitorView getTransMonitorView() {
 		if (transMonitorView == null) {
 			transMonitorView = new TransMonitorView();
+			transMonitorView
+					.setBorder(new TitledBorder(
+							new EtchedBorder(EtchedBorder.LOWERED, null, null),
+							"\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0438 \u043C\u043E\u043D\u0456\u0442\u043E\u0440\u0443",
+							TitledBorder.CENTER, TitledBorder.TOP, null,
+							new Color(51, 51, 51)));
 			transMonitorView.setFactory(ModelFactory.getInstance());
 			transMonitorView.setDiagram(getDiagramTransient());
 		}
 		return transMonitorView;
+	}
+
+	private JPanel getPanel_1_1() {
+		if (panel_1 == null) {
+			panel_1 = new JPanel();
+			panel_1.setLayout(new GridLayout(4, 0, 0, 0));
+			panel_1.add(getDiagramQueueProjects());
+			panel_1.add(getDiagramQueueDevelopmentTasks());
+			panel_1.add(getDiagramQueueTestingTasks());
+			panel_1.add(getDiagramCountCompletedProjects());
+		}
+		return panel_1;
 	}
 }
