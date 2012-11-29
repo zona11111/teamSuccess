@@ -31,7 +31,7 @@ public class Customer extends Actor {
 				}
 			}
 
-			holdForTime(model.getGui().getChooseRandom().next());
+			holdForTime(model.getGui().getChooseRandomIntens().next());
 
 		}
 	}

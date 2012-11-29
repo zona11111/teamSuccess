@@ -45,7 +45,7 @@ public class MainGui {
 	private ChooseData chooseCountCustomers = null;
 	private ChooseData chooseBugChanse = null;
 	private ChooseData chooseModelingTime = null;
-	private ChooseRandom chooseRandom = null;
+	private ChooseRandom chooseRandomIntens = null;
 	private ChooseRandom chooseRandomDevelopTime = null;
 	private ChooseRandom chooseRandomTestingTime = null;
 	private ChooseRandom chooseRandom3 = null;
@@ -175,20 +175,20 @@ public class MainGui {
 	}
 
 	/**
-	 * This method initializes chooseRandom
+	 * This method initializes chooseRandomIntens
 	 * 
 	 * @return widgets.ChooseRandom
 	 */
-	public ChooseRandom getChooseRandom() {
-		if (chooseRandom == null) {
+	public ChooseRandom getChooseRandomIntens() {
+		if (chooseRandomIntens == null) {
 			Negexp negexp1 = new Negexp();
 			negexp1.setM(50.0D);
-			chooseRandom = new ChooseRandom();
-			chooseRandom
+			chooseRandomIntens = new ChooseRandom();
+			chooseRandomIntens
 					.setTitle("\u0418\u043D\u0442\u0435\u043D\u0441\u0438\u0432. \u043F\u043E\u044F\u0432\u044B \u043D\u0430\u0432\u043E\u0433\u043E \u043F\u0440.");
-			chooseRandom.setRandom(negexp1);
+			chooseRandomIntens.setRandom(negexp1);
 		}
-		return chooseRandom;
+		return chooseRandomIntens;
 	}
 
 	/**
@@ -922,7 +922,7 @@ public class MainGui {
 			panelFeft.add(getChooseCountTeams());
 			panelFeft.add(getChooseBugChanse());
 			panelFeft.add(getChooseModelingTime());
-			panelFeft.add(getChooseRandom());
+			panelFeft.add(getChooseRandomIntens());
 			panelFeft.add(getChooseRandomDevelopTime());
 			panelFeft.add(getChooseRandomTestingTime());
 			panelFeft.add(getChooseRandom3());
