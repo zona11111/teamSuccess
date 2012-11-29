@@ -25,6 +25,9 @@ import widgets.Diagram;
 import widgets.experiments.ExperimentControl;
 import widgets.regres.RegresAnaliser;
 import widgets.trans.TransMonitorView;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MainGui {
 	private JFrame jFrame = null; // @jve:decl-index=0:visual-constraint="10,10"
@@ -60,8 +63,6 @@ public class MainGui {
 	private JCheckBox chckbxUseDebugConsole;
 	private JSplitPane splitPane;
 	private JPanel panelFeft;
-	private JPanel panel;
-	private JPanel panel_1;
 	private Diagram diagramRegress;
 	private ExperimentControl experimentControl;
 	private RegresAnaliser regresAnaliser;
@@ -660,9 +661,25 @@ public class MainGui {
 	private JPanel getJPanelRegressTab() {
 		if (jPanelRegressTab == null) {
 			jPanelRegressTab = new JPanel();
-			jPanelRegressTab.setLayout(new GridLayout(2, 0, 0, 0));
-			jPanelRegressTab.add(getPanel());
-			jPanelRegressTab.add(getPanel_1());
+			GroupLayout gl_jPanelRegressTab = new GroupLayout(jPanelRegressTab);
+			gl_jPanelRegressTab.setHorizontalGroup(
+				gl_jPanelRegressTab.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_jPanelRegressTab.createSequentialGroup()
+						.addComponent(getExperimentControl(), GroupLayout.PREFERRED_SIZE, 273, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(getRegresAnaliser(), GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE))
+					.addComponent(getDiagramRegress(), GroupLayout.PREFERRED_SIZE, 522, Short.MAX_VALUE)
+			);
+			gl_jPanelRegressTab.setVerticalGroup(
+				gl_jPanelRegressTab.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_jPanelRegressTab.createSequentialGroup()
+						.addComponent(getDiagramRegress(), GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+						.addGroup(gl_jPanelRegressTab.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(getRegresAnaliser(), 0, 0, Short.MAX_VALUE)
+							.addComponent(getExperimentControl(), GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)))
+			);
+			jPanelRegressTab.setLayout(gl_jPanelRegressTab);
 		}
 		return jPanelRegressTab;
 	}
@@ -716,23 +733,6 @@ public class MainGui {
 			});
 		}
 		return panelFeft;
-	}
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.setLayout(new GridLayout(1, 0, 0, 0));
-			panel.add(getDiagramRegress());
-		}
-		return panel;
-	}
-	private JPanel getPanel_1() {
-		if (panel_1 == null) {
-			panel_1 = new JPanel();
-			panel_1.setLayout(new GridLayout(0, 2, 0, 0));
-			panel_1.add(getExperimentControl());
-			panel_1.add(getRegresAnaliser());
-		}
-		return panel_1;
 	}
 	private ExperimentControl getExperimentControl() {
 		if (experimentControl == null) {
