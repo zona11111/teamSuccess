@@ -45,7 +45,6 @@ public class Tester extends Actor {
 			if (Math.random() < model.getGui().getChooseBugChanse().getDouble()) {
 				task.setTested(false);
 				task.getDeveloper().setTask(task);
-				team.getManager().getQueueDevelopTasks().addLast(task);
 				model.getQueueDevelopTasksAll().add(task);
 				getDispatcher().printToProtocol(
 						"есть баги, отправляем на доработку" + " -- "
